@@ -1,0 +1,41 @@
+*{
+  padding:0;
+  margin:0;
+}
+
+.conteiner{
+  width:305px;
+  height:auto;
+  border: 1px solid black;
+  margin: 20px auto;
+  background-color: rgb(78, 75, 75);
+  padding-left: 2px;
+}
+
+.answer{
+  width: 98%;
+  height: 100px;
+  background-color: rgb(78, 75, 75);
+  font-size: 36px;
+}
+
+.col{
+  width: 72.5px;
+  height: 70px;
+  margin-bottom: 4px;
+  font-size: 24px;
+}
+
+.zero{
+  width: 149px;
+}
+
+.grey{
+  background-color: rgb(125, 122, 122);
+  border: none;
+}
+
+.divide, .multiply, .substract, .add, .equels{
+  background-color: rgb(208, 142, 42);
+  border: none;
+}
