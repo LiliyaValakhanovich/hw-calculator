@@ -1,55 +1,105 @@
 let num2='';
 let num1='';
-let sign='';
-let result='';
-const form=document.querySelector('.form');
+let operation='';
+let end=false;
+
 const input=document.querySelector('.answer');
-const button=document.querySelector('.col');
+const buttonOperation=document.querySelectorAll('.col');
+const clear=document.querySelector('.clear');
+
+function clearAll() {
+  num1='';
+  num2='';
+  operation='';
+  input.value=0;
+};
+
+buttonOperation.forEach(el=>{
+  el.addEventListener('click', calculator);
+});
 
 
-
-
+function calculator(event){
  
-  const number=document.querySelectorAll('.number');
-  console.log(number);
-  number.forEach(el=>{
-    el.addEventListener('click', addToInput);
-  })
-
-  function addToInput(event){
-    console.log(event.target.value);
-    input.value=input.value+event.target.value;
-    const num=input.value;
-    console.log(typeof(num));
-    return num;
+  if (event.target.classList.contains('clear')){
+    clearAll();
+  } 
+  if (event.target.classList.contains('sign')){
+    num1=input.value*(-1);
+    input.value=num1;
+  }
+  if (event.target.classList.contains('percent')){
+    num1=input.value/100;
+    input.value=num1;
   }
 
-  const clearOperation=document.querySelector('.clear');
-  console.log(clearOperation);
-  clearOperation.addEventListener('click', ()=>{
-    return input.value='';
-  });
+  console.log(event.target);
 
-  const signNumber=document.querySelector('.sign');
-  signNumber.addEventListener('click', ()=>{
-    return input.value=input.value*(-1);
-  });
+  if(event.target.classList.contains('number')){
+    if(num2===''&& operation===''){
+      num1+=event.target.value;
+      input.value=num1;
+    }
+    else if (num1!=='' && num2!=='' && end){
+      num2=event.target.value;
+      end=false;
+      input.value=num2;
+      console.log(num1, num2, operation);
+    }
+    else {
+      num2+=event.target.value;
+      input.value=num2;
+    }
+    console.log(num1,num2,operation);
+    return;
+  }  
 
-  const percentOperation=document.querySelector('.percent');
-  percentOperation.addEventListener('click', ()=>{
-    return input.value=input.value/100;
-  });
-
-
-
-
-
-  function calculate(num1, operation, num2){
+  if(event.target.classList.contains('operation')){
+    operation=event.target.value;
+    input.value=num1;
+    console.log(num1, num2, operation);
+    return;
+  }
     
+  if(event.target.classList.contains('equels')){
+        
+    if(operation==='+'){
+      num1=Number(num1)+Number(num2);
+      end=true;
+      input.value=num1;
+      console.log(num1, num2, operation);
+      return input.value; 
+           
+    } if (operation==='/'){
+      if(num2==='0'){
+        input.value='нельзя делить на ноль';
+        return;
+      }
+      num1=num1/num2;
+      end=true;
+      input.value=num1;
+      console.log(num1, num2, operation);
+      return input.value; 
+            
+    } if (operation==='x'){
+      num1=num1*num2;
+      end=true;
+      input.value=num1;
+      console.log(num1, num2, operation);
+      return input.value; 
+            
+    } if (operation==='-'){
+      num1=num1-num2;
+      end=true;
+      input.value=num1;
+      console.log(num1, num2, operation);
+      return input.value; 
+    }
   }
+    
+};
 
-
-
-
-
-
+input.addEventListener('keydown', (event)=>{
+  console.log('keydown', event.code, typeof(event.key));
+  
+});
