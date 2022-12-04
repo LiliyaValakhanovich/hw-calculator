@@ -4,16 +4,16 @@ let operation='';
 let end=false;
 let comma=false;
 
-const input=document.querySelector('.answer');
+/**const input=document.querySelector('.answer');*/
 const buttonOperation=document.querySelectorAll('.col');
-const clear=document.querySelector('.clear');
 
 function clearAll() {
   num1='';
   num2='';
   operation='';
-  input.value=0;
+  input.value='';
   comma=false;
+  end=false;
 };
 
 buttonOperation.forEach(el=>{
@@ -35,26 +35,7 @@ function calculator(event){
   }
  
   if(event.target.classList.contains('comma')){
-    if (comma===false && num1==='' && num2==='' && operation===''){
-      return;
-    }
-    if(comma===false && num2==='' && operation===''){
-      num1+=event.target.value;
-      comma=true;
-    }
-    if (comma===false && num1!=='' && operation!=='' && num2===''){
-      return;
-    }
-    if( comma===false && num1!=='' && operation!==''){
-      num2+=event.target.value;
-      comma=true;
-    } 
-    if (comma===true && num1!=='' && operation!=='' && !num2.includes('.') && num2===''){
-      return;
-    }
-    if (comma===true && num1!=='' && operation!=='' && !num2.includes('.')){
-      num2+=event.target.value;
-    }
+    inputComma(event);
   } 
 
   if(event.target.classList.contains('number')){
@@ -71,7 +52,7 @@ function calculator(event){
     
 };
 
-/**function inputComma(event){
+function inputComma(event){
   if (comma===false && num1==='' && num2==='' && operation===''){
     return;
   }
@@ -92,10 +73,10 @@ function calculator(event){
   if (comma===true && num1!=='' && operation!=='' && !num2.includes('.')){
     num2+=event.target.value;
   }
-};*/
+};
 
 function inputNumber(event){
-  if(num2===''&& operation===''){
+  if(num2===''&& operation===''){ 
     num1+=event.target.value;
     input.value=num1;
   }
@@ -139,7 +120,7 @@ function calculationResult(event){
     console.log(num1, num2, operation);
     return input.value; 
           
-  } if (operation==='x'){
+  } if (operation==='*'){
     num1=num1*num2;
     end=true;
     input.value=num1;
@@ -158,22 +139,26 @@ function calculationResult(event){
 
 
 
-input.addEventListener('keydown', (event)=>{
+/**input.addEventListener('keydown', (event)=>{
   console.log('keydown', event.code, event.key);
 
-  if (event.key==='Backspace'){
-    num1='';
-    num2='';
-    operation='';
-    input.value='';
+  if ((/[a-z]/.test(event.key)) || (/[A-Z]/.test(event.key))){
+    event.preventDefault();
   }
 
-  
+  if (event.key==='Backspace'){
+    clearAll();
+  }
+
+  if (event.key==='%'){
+    event.preventDefault();
+    num1=input.value/100;
+    input.value=num1; 
+  } 
 
   if (event.key>=0 && event.key<=9){
     if(num2==='' && operation===''){
       num1+=event.key;
-
       console.log(num1 );
     }
     else if(num1!=='' && num2!=='' && end){
@@ -181,51 +166,18 @@ input.addEventListener('keydown', (event)=>{
       end=false;
       
       console.log(num1, num2, operation);
-    } else{
+    } else {
       num2+=event.key;
       console.log(num2);
-    }
-   
+    } 
   }
 
   if (event.key==='+' || event.key==='-' || event.key==='*' || event.key==='/'){
-    if (input.value.includes(event.key)){
-    
-    }
-    operation=event.key;
-    console.log(input.value);
+    operation=event.key; 
   }
 
   if (event.key==='='){
-    if(operation==='+'){
-      num1=Number(num1)+Number(num2);
-      end=true;
-      
-      console.log(num1, num2, operation);
-      return num1; 
-    } if(operation==='-'){
-      num1=num1-num2;
-      end=true;
-      input.value=num1;
-      console.log(input.value);
-      return input.value; 
-    } if (operation==='*'){
-      num1=num1*num2;
-      end=true;
-      input.value=num1;
-      console.log(num1, num2, operation);
-      return input.value; 
-    } if (operation==='/'){
-      if (num2==='0'){
-        input.value='нельзя делить на ноль';
-        return;
-      } num1=num1/num2;
-        end=true;
-        input.value=num1;
-        console.log(num1, num2, operation);
-        return input.value; 
-    }
+    event.preventDefault();
+    calculationResult();
   }
-
-
-});
+});*/
